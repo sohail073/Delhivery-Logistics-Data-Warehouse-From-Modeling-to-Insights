@@ -130,7 +130,7 @@ WHERE
     OR source_name IN ('NaN', 'nan', 'NULL', 'null', '') 
     OR destination_center IN ('NaN', 'nan', 'NULL', 'null', '') 
     OR destination_name IN ('NaN', 'nan', 'NULL', 'null', '');
-
+select * from trip_data;
 -- Adding column state to dim_location
 ALTER TABLE dim_location
 ADD COLUMN location_state TEXT;
@@ -190,4 +190,47 @@ WHERE is_cutoff IS NOT NULL
    OR cutoff_timestamp IS NOT NULL;
 
 -- insert into fact_trip_metrics 
+INSERT INTO fact_trip_metrics (
+    trip_uuid,
+    source_location_id,
+    destination_location_id,
+    time_id,
+    cutoff_id,
+    actual_time,
+    osrm_time,
+    actual_distance,
+    segment_actual_time,
+    segment_osrm_time,
+    segment_osrm_distance,
+    start_scan_to_end_scan
+)
+SELECT 
+    sc.trip_uuid,
+    sc.source_center AS source_location_id,
+    sc.destination_center AS destination_location_id,
+    dt.time_id,
+    dc.cutoff_id,
+    sc.actual_time,
+    sc.osrm_time,
+    sc.actual_distance_to_destination AS actual_distance,
+    sc.segment_actual_time,
+    sc.segment_osrm_time,
+    sc.segment_osrm_distance,
+    sc.start_scan_to_end_scan
+FROM 
+    staging_cleaned sc
+JOIN 
+    dim_time dt ON 
+        dt.trip_creation_time = sc.trip_creation_time AND
+        dt.od_start_time = sc.od_start_time AND
+        dt.od_end_time = sc.od_end_time
+JOIN 
+    dim_cutoff dc ON 
+        dc.is_cutoff = sc.is_cutoff AND
+        dc.cutoff_factor = sc.cutoff_factor AND
+        dc.cutoff_timestamp = sc.cutoff_timestamp
+WHERE 
+    sc.trip_uuid IS NOT NULL
+ON CONFLICT (trip_uuid) DO NOTHING;
+
 
