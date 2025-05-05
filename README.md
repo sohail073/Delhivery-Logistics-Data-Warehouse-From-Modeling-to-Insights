@@ -18,8 +18,6 @@ Delhivery, like any logistics company, generates massive trip-level data from de
 ---
 ## 📊 Star Schema Design
 
-> Efficiently structured for BI tools and SQL queries.
-
 ![Star Schema Diagram](erd.png)
 
 ### 📌 Fact Table
