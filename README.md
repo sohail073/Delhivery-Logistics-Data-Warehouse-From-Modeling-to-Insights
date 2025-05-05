@@ -35,8 +35,6 @@ Delhivery, like any logistics company, generates massive trip-level data from de
 
 > Converts raw, unstructured data into clean star-schema-ready tables.
 
-![ETL Process Flow]()
-
 ### Key Steps:
 
 1. **Staging Table Creation**
