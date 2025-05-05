@@ -1,5 +1,7 @@
 # Delhivery Logistics ETL Pipeline & Warehousing
 
+![ETL Flow](E:\datawarehousingtoinsights\ETL.png)
+
 A **PostgreSQL-based ETL pipeline** designed to analyze trip-level logistics data from Delhivery. This project transforms raw logistics trip records into a **star schema** optimized for analysis and reporting. It also includes **automated data loading** using `pgAgent`.
 
 ---
@@ -18,7 +20,7 @@ Delhivery, like any logistics company, generates massive trip-level data from de
 
 > Efficiently structured for BI tools and SQL queries.
 
-![Star Schema Diagram]()
+![Star Schema Diagram](E:\datawarehousingtoinsights\erd.png)
 
 ### 📌 Fact Table
 - `fact_trip_metrics`: Central table with computed trip metrics like time differences, distance comparisons, and cutoff status.
